@@ -1,22 +1,22 @@
 export const navLinks = [
   {
-    id: "HomePage",
+    id: "home",
     title: "Home",
   },
   {
-    id: "AddEmployeePage",
+    id: "add-employee",
     title: "Add Employee",
   },
   {
-    id: "MyInfoPage",
-    title: "My Profile",
+    id: "my-info",
+    title: "My Info",
   },
   {
-    id: "LoginPage",
+    id: "login",
     title: "Login",
   },
   {
-    id: "RegisterPage",
-    title: "Sign Up",
+    id: "register",
+    title: "Register",
   },
 ];

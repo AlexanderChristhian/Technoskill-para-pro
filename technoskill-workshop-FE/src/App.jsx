@@ -10,16 +10,28 @@ import Navbar from "./components/Navbar";
 
 const App = () => (
   <div className="bg-gradient-to-br from-slate-900 to-zinc-900 overflow-hidden">
+
     <div className={`${styles.paddingX} ${styles.flexCenter}`}>
       <div className={`${styles.boxWidth}`}>
-        <Navbar />
-        <HomePage />
-        <LoginPage />
-        <RegisterPage />
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to={"/login"} />} />
+
+        <Route path="/home" element={<HomePage />} />
+
+        <Route path="/add-employee" element={<AddEmployeePage />} />
+
+        <Route path="/my-info" element={<MyInfoPage />} />
+
+        <Route path="/login" element={<LoginPage />} />
+
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+    </BrowserRouter>
       </div>
     </div>
-    
   </div>
+
 );
 
 

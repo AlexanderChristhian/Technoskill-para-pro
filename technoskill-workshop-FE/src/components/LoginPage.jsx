@@ -1,6 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 const LoginPage = () => {
+  const navigate = useNavigate();
   return (
+    
     <div className="flex items-center justify-center h-screen w-full px-5 sm:px-0">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden max-w-sm lg:max-w-4xl w-full">
         <div
@@ -43,7 +47,7 @@ const LoginPage = () => {
               className="text-xs text-gray-500 capitalize text-center w-full"
             >
               Don&apos;t have any account yet?
-              <span className="text-blue-700"> Sign Up</span>
+              <span className="text-blue-700" onClick={() => navigate("/register")}> Sign Up</span>
             </a>
           </div>
         </div>

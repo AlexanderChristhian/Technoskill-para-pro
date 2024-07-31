@@ -1,8 +1,10 @@
 import React from 'react';
+import Navbar from './Navbar';
 
 const HomePage = () => {
   return (
     <div className='text-white font-poppins' >
+    <Navbar />
       <div className='max-w-[800px] mt-[-96px] w-full h-screen mx-auto text-center flex flex-col justify-center'>
         <p className='bg-gradient-to-br from-purple-400 to-pink-500 bg-clip-text text-transparent font-bold p-2 '>
         Welcome to Technoskill 1.0 Employee Database Management
