@@ -3,6 +3,7 @@ import styles from "./style";
 import HomePage from "./components/HomePage";
 import AddEmployeePage from "./components/AddEmployeePage";
 import EmployeeDetails from "./components/AddEmployeePage";
+import RegisterPage from "./components/RegisterPage";
 import MyInfoPage from "./components/MyInfoPage";
 import LoginPage from "./components/LoginPage";
 import Navbar from "./components/Navbar";
@@ -13,6 +14,8 @@ const App = () => (
       <div className={`${styles.boxWidth}`}>
         <Navbar />
         <HomePage />
+        <LoginPage />
+        <RegisterPage />
       </div>
     </div>
     
