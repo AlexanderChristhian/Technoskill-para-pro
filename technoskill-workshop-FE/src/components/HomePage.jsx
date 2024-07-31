@@ -1,65 +1,24 @@
-import DashboardElement from "./elements/DashboardElement";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from 'react';
 
-export default function HomePage() {
-  const [data, setData] = useState([]);
-  const handleHomePage = async () => {
-    try {
-      const response = await axios.post("http://localhost:8000/employee/get");
-      console.log(response.data);
-
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    handleHomePage();
-  }, []);
-
+const HomePage = () => {
   return (
-    <div className="bg-[#CED1DA] flex">
-      <DashboardElement />
-
-      <div className="bg-[#798DC5] w-[1400px] h-[841px] m-auto rounded-2xl flex-1">
-        <ol className="overflow-auto w-full">
-          {data.map((employee, index) => (
-            <li
-              key={index}
-              className="text-white text-[20px] p-3 flex flex-col bg-[#737CCF] m-2 rounded-2xl"
-            >
-              <p>{employee.name}</p>
-              <p>{employee.division}</p>
-              <p>{employee.salary}</p>
-            </li>
-          ))}
-        </ol>
+    <div className='text-white font-poppins' >
+      <div className='max-w-[800px] mt-[-96px] w-full h-screen mx-auto text-center flex flex-col justify-center'>
+        <p className='bg-gradient-to-br from-purple-400 to-pink-500 bg-clip-text text-transparent font-bold p-2 '>
+        Welcome to Technoskill 1.0 Employee Database Management
+        </p>
+        <h1 className='md:text-5xl animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-white pr-5 text-white font-boldmd:text-3xl sm:text-5xl text-4xl font-bold md:py-6'>
+        Manage your Workforce Now!!!
+        </h1>
+        <div className='flex justify-center items-center'>
+          <p className='md:text-2xl sm:text-4xl text-xl font-bold py-4'>
+          A robust and user-friendly employee database management system designed to streamline your HR processes
+          </p>
+        </div>
+        <button className='bg-violet-500 hover:bg-violet-600 active:bg-violet-700 w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black'>Check Below</button>
       </div>
     </div>
   );
-}
+};
 
-const data = [
-  {
-    name: "ABC",
-    div: "HR",
-    salary: "Rp 5000",
-  },
-  {
-    name: "JHK",
-    div: "HR",
-    salary: "Rp 5000",
-  },
-  {
-    name: "POI",
-    div: "HR",
-    salary: "Rp 5000",
-  },
-  {
-    name: "KKK",
-    div: "HR",
-    salary: "Rp 5000",
-  },
-];
+export default HomePage;
