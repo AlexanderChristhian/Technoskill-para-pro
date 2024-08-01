@@ -1,8 +1,41 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from 'axios';
 import registrasi from '../assets/registrasi.png'; 
 
 const RegisterPage = () => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [ConfirmPass, setConfirmPass] = useState("");
+
+    const handleAddEmployee = async () => {
+      try {
+        const response = await axios.post('http://localhost:8000/employee/add', {
+          name,
+          email,
+          password,
+        });
+
+        if(response.status !== 201) throw new Error("Add employee failed");
+
+        console.log(response.data);
+
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+    const CheckPassword = () => {
+      if (password === ConfirmPass){
+        handleAddEmployee();
+      }
+      else {
+        setError("Passwords do not match!");
+      }
+    }
+
     const navigate = useNavigate();
     return (
         <div className="flex items-center justify-center h-screen w-full px-5 sm:px-0 bg-gradient-to-br from-slate-900 to-zinc-900">
@@ -21,6 +54,8 @@ const RegisterPage = () => {
                   Email Address
                 </label>
                 <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
                   type="email"
                   required
@@ -33,6 +68,8 @@ const RegisterPage = () => {
                   </label>
                 </div>
                 <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
                   type="text"
                 />
@@ -44,6 +81,8 @@ const RegisterPage = () => {
                   </label>
                 </div>
                 <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
                   type="password"
                 />
@@ -55,12 +94,14 @@ const RegisterPage = () => {
                   </label>
                 </div>
                 <input
+                  value={ConfirmPass}
+                  onChange={(e) => setc(e.target.value)}
                   className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
                   type="password"
                 />
               </div>
               <div className="mt-8">
-                <button className="bg-purple-600 text-gray-200 font-bold py-2 px-4 w-full rounded hover:bg-purple-700">
+                <button className="bg-purple-600 text-gray-200 font-bold py-2 px-4 w-full rounded hover:bg-purple-700" onClick={CheckPassword}>
                   Register
                 </button>
               </div>

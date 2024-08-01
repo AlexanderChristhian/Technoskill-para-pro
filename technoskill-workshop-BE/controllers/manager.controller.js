@@ -1,7 +1,17 @@
 const pg = require("../utils/connect");
 
 exports.register = async function register(req, res) {
-  // Insert kode REGISTER di sini
+  try {
+    const { name, email, password } = req.body;
+    const response = await pg.query(
+      "INSERT INTO employee (name, email, password) VALUES ($1, $2, $3) RETURNING *",
+      [name, division, salary]
+    );
+
+    res.status(201).json(response.rows[0]);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 };
 
 exports.login = async function login(req, res) {
