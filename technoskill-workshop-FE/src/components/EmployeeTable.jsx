@@ -26,7 +26,7 @@ const EmployeeTable = () => {
   ];
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-lg mx-auto">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-lg mx-auto mb-12">
       <header className="text-center my-6">
         <h2 className="text-2xl text-gray-900 dark:text-white">
           Recently Added Employees
