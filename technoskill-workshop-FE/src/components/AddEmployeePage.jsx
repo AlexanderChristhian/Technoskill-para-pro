@@ -1,6 +1,6 @@
 import { useState } from "react";
-import DashboardElement from "./elements/DashboardElement";
 import axios from 'axios';
+import ngumpulImage from '../assets/ngumpul.png'; 
 
 export default function AddEmployeePage() {
   const [name, setName] = useState("");
@@ -25,43 +25,67 @@ export default function AddEmployeePage() {
   }
 
   return (
-    <div className="bg-[#CED1DA] h-screen w-screen flex">
-      <DashboardElement />
-
-      <div className="bg-[#2B2E63] w-[622px] h-[675px] m-auto rounded-2xl flex flex-col text-white">
-        <p className="text-[30px] mx-auto mt-20">Add New Employee</p>
-
-        <div className="mx-auto mt-10">
-          <p className="text-[20px]">Name</p>
+    <div className="flex items-center justify-center h-screen w-full px-5 sm:px-0 bg-gradient-to-br from-slate-900 to-zinc-900">
+    <div className="flex bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg overflow-hidden max-w-sm lg:max-w-4xl w-full">
+      <div
+        className="hidden md:block lg:w-1/2 bg-cover"
+        style={{
+          backgroundImage: `url(${ngumpulImage})`,
+          backgroundSize: 'cover',
+        }}
+      ></div>
+      <div className="w-full p-8 lg:w-1/2 font-poppins">
+        <p className="text-xl text-gray-200 text-center">Add A New Employee Details Here</p>
+        <div className="mt-4">
+          <label className="block text-gray-300 text-sm font-bold mb-2">
+            Name
+          </label>
           <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2"
+            className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
+            type="text"
+            required
           />
         </div>
-
-        <div className="mx-auto mt-10">
-          <p className="text-[20px]">Division</p>
+        <div className="mt-4 flex flex-col justify-between">
+          <div className="flex justify-between">
+            <label className="block text-gray-300 text-sm font-bold mb-2">
+              Division
+            </label>
+          </div>
           <input
-            value={division}
-            onChange={(e) => setDivision(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2"
+            className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
+            type="text"
           />
         </div>
-
-        <div className="mx-auto mt-10">
-          <p className="text-[20px]">Salary</p>
+        <div className="mt-4 flex flex-col justify-between">
+          <div className="flex justify-between">
+            <label className="block text-gray-300 text-sm font-bold mb-2">
+              Salary (IDR)
+            </label>
+          </div>
           <input
-            value={salary}
-            onChange={(e) => setSalary(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2"
+            className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
+            type="number"
           />
         </div>
-
-        <div className="mx-auto mt-20">
-          <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleAddEmployee}>Add</button>
+        <div className="mt-4 flex flex-col justify-between">
+          <div className="flex justify-between">
+            <label className="block text-gray-300 text-sm font-bold mb-2">
+              Address
+            </label>
+          </div>
+          <input
+            className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
+            type="text"
+          />
+        </div>
+        <div className="mt-8">
+          <button className="bg-purple-600 text-gray-200 font-bold py-2 px-4 w-full rounded hover:bg-purple-700">
+            Add
+          </button>
         </div>
       </div>
     </div>
+  </div>
   );
 }

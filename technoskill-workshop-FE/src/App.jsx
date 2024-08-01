@@ -14,8 +14,9 @@ const App = () => (
     <div className={`${styles.paddingX} ${styles.flexCenter}`}>
       <div className={`${styles.boxWidth}`}>
       <BrowserRouter>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Navigate to={"/login"} />} />
+        <Route path="/" element={<Navigate to={"/home"} />} />
 
         <Route path="/home" element={<HomePage />} />
 

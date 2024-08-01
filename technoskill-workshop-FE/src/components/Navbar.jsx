@@ -1,11 +1,16 @@
-import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { close, logo, menu } from "../assets";
 import { navLinks } from "../constants";
+import { useState } from "react";
 
 const Navbar = () => {
-  const [active, setActive] = useState("Home");
+  const location = useLocation();
   const [toggle, setToggle] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigation = (title, id) => {
+    navigate(`/${id}`, { state: { active: title } });
+  };
 
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar">
@@ -16,11 +21,23 @@ const Navbar = () => {
           <li
             key={nav.id}
             className={`font-poppins font-normal cursor-pointer text-[16px] ${
-              active === nav.title ? "text-white" : "text-dimWhite"
+              location.pathname === `/${nav.id}` || (location.state && location.state.active === nav.title) ? "text-white" : "text-dimWhite"
             } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
-            onClick={() => Navigate(nav.title)}
+            onClick={() => handleNavigation(nav.title, nav.id)}
           >
-            <a href={`${nav.id}`}>{nav.title}</a>
+            {nav.title === "Register" || nav.id === "register" ? (
+              <span
+                className={`px-4 py-2 rounded-full ${
+                  location.pathname === `/${nav.id}` || (location.state && location.state.active === nav.title)
+                    ? "bg-purple-700 text-white"
+                    : "bg-purple-500 text-dimWhite"
+                }`}
+              >
+                {nav.title}
+              </span>
+            ) : (
+              nav.title
+            )}
           </li>
         ))}
       </ul>
@@ -43,11 +60,23 @@ const Navbar = () => {
               <li
                 key={nav.id}
                 className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                  active === nav.title ? "text-white" : "text-dimWhite"
+                  location.pathname === `/${nav.id}` || (location.state && location.state.active === nav.title) ? "text-white" : "text-dimWhite"
                 } ${index === navLinks.length - 1 ? "mb-0" : "mb-4"}`}
-                onClick={() => setActive(nav.title)}
+                onClick={() => handleNavigation(nav.title, nav.id)}
               >
-                <a href={`${nav.id}`}>{nav.title}</a>
+                {nav.title === "Register" || nav.id === "register" ? (
+                  <span
+                    className={`px-4 py-2 rounded-full ${
+                      location.pathname === `/${nav.id}` || (location.state && location.state.active === nav.title)
+                        ? "bg-purple-700 text-white"
+                        : "bg-purple-500 text-dimWhite"
+                    }`}
+                  >
+                    {nav.title}
+                  </span>
+                ) : (
+                  nav.title
+                )}
               </li>
             ))}
           </ul>
