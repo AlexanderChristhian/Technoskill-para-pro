@@ -1,31 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const employees = [
-  {
-    id: '1',
-    name: 'John Doe',
-    division: 'Engineering',
-    salary: 'IDR 25,000,000',
-    addresses: '123 Main St, Jakarta',
-  },
-  {
-    id: '2',
-    name: 'Jane Smith',
-    division: 'Marketing',
-    salary: 'IDR 22,000,000',
-    addresses: '456 Elm St, Bandung',
-  },
-  {
-    id: '3',
-    name: 'Emily Johnson',
-    division: 'Design',
-    salary: 'IDR 20,000,000',
-    addresses: '789 Oak St, Surabaya',
-  },
-];
-
 const EmployeeTable = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const handleHomePage = async () => {
+    try {
+      const response = await axios.post("http://localhost:8000/employee/get");
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching employees:', error);
+      setError('Failed to fetch employees');
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handleHomePage();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-lg mx-auto mb-12">
       <header className="text-center my-6">
@@ -44,7 +44,7 @@ const EmployeeTable = () => {
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee, index) => (
+          {data.map((employee, index) => (
             <tr
               key={employee.id}
               className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ${

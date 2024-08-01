@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useEffect, useState } from "react";
 import EmployeeTable from './EmployeeTable';
 
 const HomePage = () => {

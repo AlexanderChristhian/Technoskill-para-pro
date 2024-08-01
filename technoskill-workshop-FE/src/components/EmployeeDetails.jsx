@@ -1,40 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import employeeIcon from '../assets/employee.svg';
-
-
-const employees = [
-  {
-    id: '1',
-    name: 'John Doe',
-    division: 'Engineering',
-    salary: 'IDR 25,000,000',
-    addresses: '123 Main St, Jakarta',
-  },
-  {
-    id: '2',
-    name: 'Jane Smith',
-    division: 'Marketing',
-    salary: 'IDR 22,000,000',
-    addresses: '456 Elm St, Bandung',
-  },
-  {
-    id: '3',
-    name: 'Emily Johnson',
-    division: 'Design',
-    salary: 'IDR 20,000,000',
-    addresses: '789 Oak St, Surabaya',
-  },
-];
 
 const EmployeeDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const employee = employees.find(emp => emp.id === id);
+  const [employee, setEmployee] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!employee) {
-    return <div>Employee not found</div>;
-  }
+  useEffect(() => {
+    const fetchEmployeeDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/employee/${id}`);
+        setEmployee(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching employee details:', error);
+        setError('Failed to fetch employee details');
+        setLoading(false);
+      }
+    };
+  
+    fetchEmployeeDetails();
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  if (!employee) return <div>Employee not found</div>;
 
   return (
     <div className="flex items-center justify-center min-h-screen w-full px-5 sm:px-0 bg-gradient-to-br from-slate-900 to-zinc-900">
@@ -63,7 +57,7 @@ const EmployeeDetails = () => {
           </p>
           <p className="pt-2 font-bold text-gray-200 text-base lg:text-sm flex items-center justify-center">
             <i className="fas fa-map-marker-alt h-4 text-purple-600 pr-4"></i>
-            Address: <span className="pl-2">{employee.addresses}</span>
+            Address: <span className="pl-2">{employee.address}</span>
           </p>
         </div>
       </div>

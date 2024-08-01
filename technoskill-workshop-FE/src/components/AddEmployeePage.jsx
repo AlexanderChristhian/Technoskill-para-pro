@@ -6,6 +6,7 @@ export default function AddEmployeePage() {
   const [name, setName] = useState("");
   const [division, setDivision] = useState("");
   const [salary, setSalary] = useState("");
+  const [address, setAddress] = useState("");
 
   const handleAddEmployee = async () => {
     try {
@@ -13,6 +14,7 @@ export default function AddEmployeePage() {
         name,
         division,
         salary,
+        address,
       });
 
       if(response.status !== 201) throw new Error("Add employee failed");
@@ -41,6 +43,8 @@ export default function AddEmployeePage() {
             Name
           </label>
           <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
             type="text"
             required
@@ -53,6 +57,8 @@ export default function AddEmployeePage() {
             </label>
           </div>
           <input
+            value={division}
+            onChange={(e) => setDivision(e.target.value)}
             className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
             type="text"
           />
@@ -64,6 +70,8 @@ export default function AddEmployeePage() {
             </label>
           </div>
           <input
+            value={salary}
+            onChange={(e) => setSalary(e.target.value)}
             className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
             type="number"
           />
@@ -75,12 +83,14 @@ export default function AddEmployeePage() {
             </label>
           </div>
           <input
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             className="text-gray-200 border border-gray-600 rounded py-2 px-4 block w-full bg-gray-800 focus:outline-2 focus:outline-blue-500"
             type="text"
           />
         </div>
         <div className="mt-8">
-          <button className="bg-purple-600 text-gray-200 font-bold py-2 px-4 w-full rounded hover:bg-purple-700">
+          <button className="bg-purple-600 text-gray-200 font-bold py-2 px-4 w-full rounded hover:bg-purple-700" onClick={handleAddEmployee}>
             Add
           </button>
         </div>
