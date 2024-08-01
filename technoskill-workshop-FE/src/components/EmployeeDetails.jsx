@@ -42,7 +42,7 @@ const EmployeeDetails = () => {
         <div className="hidden md:block bg-cover" style={{ backgroundImage: `url(https://source.unsplash.com/1L71sPT5XKc)`, backgroundSize: 'cover' }}></div>
         <div className="w-full p-8 font-poppins text-gray-200">
           <button
-            onClick={() => navigate('/home')} 
+            onClick={() => navigate(-1)} 
             className="absolute top-4 right-4 text-purple-600 hover:text-purple-400 transition-colors duration-200"
           >
             <i className="fas fa-arrow-left"></i> Back
