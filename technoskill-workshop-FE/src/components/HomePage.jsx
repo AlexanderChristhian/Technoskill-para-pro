@@ -1,7 +1,5 @@
 import React, { useRef } from 'react';
-import EmployeeDetails from './EmployeeDetails';
 import EmployeeTable from './EmployeeTable';
-import Navbar from './Navbar';
 
 const HomePage = () => {
   const employeeTableRef = useRef(null);
@@ -33,7 +31,7 @@ const HomePage = () => {
       <div ref={employeeTableRef}>
         <EmployeeTable />
       </div>
-      <EmployeeDetails />
+      
     </div>
   );
 };

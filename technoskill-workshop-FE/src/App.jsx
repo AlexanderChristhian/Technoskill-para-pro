@@ -2,11 +2,12 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import styles from "./style";
 import HomePage from "./components/HomePage";
 import AddEmployeePage from "./components/AddEmployeePage";
-import EmployeeDetails from "./components/AddEmployeePage";
+import EmployeeDetails from "./components/EmployeeDetails";
 import RegisterPage from "./components/RegisterPage";
 import MyInfoPage from "./components/MyInfoPage";
 import LoginPage from "./components/LoginPage";
 import Navbar from "./components/Navbar";
+import EmployeeTable from "./components/EmployeeTable";
 
 const App = () => (
   <div className="bg-gradient-to-br from-slate-900 to-zinc-900 overflow-hidden">
@@ -27,6 +28,10 @@ const App = () => (
         <Route path="/login" element={<LoginPage />} />
 
         <Route path="/register" element={<RegisterPage />} />
+
+        <Route path="/table" element={<EmployeeTable />} />
+
+        <Route path="/employee-details/:id" element={<EmployeeDetails />} />
       </Routes>
     </BrowserRouter>
       </div>

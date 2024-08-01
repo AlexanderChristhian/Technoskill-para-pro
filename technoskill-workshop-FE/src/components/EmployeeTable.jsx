@@ -1,30 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+const employees = [
+  {
+    id: '1',
+    name: 'John Doe',
+    division: 'Engineering',
+    salary: 'IDR 25,000,000',
+    addresses: '123 Main St, Jakarta',
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    division: 'Marketing',
+    salary: 'IDR 22,000,000',
+    addresses: '456 Elm St, Bandung',
+  },
+  {
+    id: '3',
+    name: 'Emily Johnson',
+    division: 'Design',
+    salary: 'IDR 20,000,000',
+    addresses: '789 Oak St, Surabaya',
+  },
+];
 
 const EmployeeTable = () => {
-  const employees = [
-    {
-      id: '1',
-      name: 'John Doe',
-      division: 'Engineering',
-      salary: 'IDR 25,000,000',
-      addresses: '123 Main St, Jakarta',
-    },
-    {
-      id: '2',
-      name: 'Jane Smith',
-      division: 'Marketing',
-      salary: 'IDR 22,000,000',
-      addresses: '456 Elm St, Bandung',
-    },
-    {
-      id: '3',
-      name: 'Emily Johnson',
-      division: 'Design',
-      salary: 'IDR 20,000,000',
-      addresses: '789 Oak St, Surabaya',
-    },
-  ];
-
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-lg mx-auto mb-12">
       <header className="text-center my-6">
@@ -45,7 +46,7 @@ const EmployeeTable = () => {
         <tbody>
           {employees.map((employee, index) => (
             <tr
-              key={index}
+              key={employee.id}
               className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ${
                 index % 2 === 0 ? '' : 'bg-gray-100'
               }`}
@@ -55,7 +56,12 @@ const EmployeeTable = () => {
               </td>
               <td className="px-6 py-4">{employee.name}</td>
               <td className="px-6 py-4 text-right">
-                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Details</a>
+                <Link
+                  to={`/employee-details/${employee.id}`}
+                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  View Details
+                </Link>
               </td>
             </tr>
           ))}
