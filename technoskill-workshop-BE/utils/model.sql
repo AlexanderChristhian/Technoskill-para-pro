@@ -9,6 +9,5 @@ create table if not exists employee (
 create table if not exists manager (
     id serial primary key,
     name text not null,
-    email text not null,
     password text not null
 );
