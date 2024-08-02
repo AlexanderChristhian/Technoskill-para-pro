@@ -40,7 +40,7 @@ exports.login = async function login(req, res) {
 
 exports.getProfile = async function getProfile(req, res) {
   try {
-    const { email } = req.query; // Retrieve from query parameters
+    const { email } = req.query; 
     if (!email) {
       return res.status(400).json({ error: "Email is required" });
     }
@@ -58,4 +58,27 @@ exports.getProfile = async function getProfile(req, res) {
   }
 };
 
+exports.updatePassword = async function updatePassword(req, res) {
+  try {
+    const { email, currentPassword, newPassword } = req.body;
+
+    const checkPasswordResponse = await pg.query(
+      "SELECT * FROM manager WHERE email = $1 AND password = $2",
+      [email, currentPassword]
+    );
+
+    if (checkPasswordResponse.rows.length === 0) {
+      return res.status(400).json({ error: "Current password is incorrect" });
+    }
+
+    await pg.query(
+      "UPDATE manager SET password = $1 WHERE email = $2",
+      [newPassword, email]
+    );
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
