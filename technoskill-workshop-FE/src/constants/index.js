@@ -19,4 +19,8 @@ export const navLinks = [
     id: "register",
     title: "Register",
   },
+  {
+    id: "sign-out",
+    title: "Sign Out",
+  },
 ];

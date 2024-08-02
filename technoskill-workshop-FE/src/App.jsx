@@ -8,6 +8,9 @@ import MyInfoPage from "./components/MyInfoPage";
 import LoginPage from "./components/LoginPage";
 import Navbar from "./components/Navbar";
 import EmployeeTable from "./components/EmployeeTable";
+import SuccessPage from "./components/SuccessPage";
+import RegisterSuccess from "./components/RegisterSuccess";
+import LoginSuccess from "./components/LoginSuccess";
 
 const App = () => (
   <div className="bg-gradient-to-br from-slate-900 to-zinc-900 overflow-hidden">
@@ -32,6 +35,12 @@ const App = () => (
         <Route path="/table" element={<EmployeeTable />} />
 
         <Route path="/employee-details/:id" element={<EmployeeDetails />} />
+
+        <Route path="/success" element={<SuccessPage />} />
+
+        <Route path="/register-success" element={<RegisterSuccess />} />
+
+        <Route path="/login-success" element={<LoginSuccess />} />
       </Routes>
     </BrowserRouter>
       </div>

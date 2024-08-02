@@ -1,15 +1,49 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { close, logo, menu } from "../assets";
-import { navLinks } from "../constants";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const location = useLocation();
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
+  const [navLinks, setNavLinks] = useState([]);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  useEffect(() => {
+    const email = localStorage.getItem('ActiveEmail');
+    
+    if (email) {
+      setNavLinks([
+        { id: "home", title: "Home" },
+        { id: "add-employee", title: "Add Employee" },
+        { id: "my-info", title: "My Info" },
+        { id: "sign-out", title: "Sign Out" },
+      ]);
+    } else {
+      setNavLinks([
+        { id: "home", title: "Home" },
+        { id: "login", title: "Login" },
+        { id: "register", title: "Register" },
+      ]);
+    }
+  }, [location]);
 
   const handleNavigation = (title, id) => {
-    navigate(`/${id}`, { state: { active: title } });
+    if (id === "sign-out") {
+      setShowConfirmDialog(true);
+    } else {
+      navigate(`/${id}`, { state: { active: title } });
+    }
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem('ActiveEmail');
+    setShowConfirmDialog(false);
+    navigate('/login');
+  };
+
+  const handleCancel = () => {
+    setShowConfirmDialog(false);
   };
 
   return (
@@ -82,6 +116,27 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
+      {showConfirmDialog && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+          <div className="font-poppins bg-gradient-to-r from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg text-center">
+            <p className="text-white text-lg mb-4">Are you sure you want to sign out?</p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={handleSignOut}
+                className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
+              >
+                Sign Out
+              </button>
+              <button
+                onClick={handleCancel}
+                className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-300"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
