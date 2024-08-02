@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom';
 
 const EmployeeTable = () => {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleHomePage = async () => {
+  const fetchEmployees = async () => {
     try {
       const response = await axios.post("http://localhost:8000/employee/get");
       setData(response.data);
+      setFilteredData(response.data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching employees:', error);
@@ -20,8 +23,30 @@ const EmployeeTable = () => {
   };
 
   useEffect(() => {
-    handleHomePage();
+    fetchEmployees();
   }, []);
+
+  useEffect(() => {
+    if (searchQuery === '') {
+      setFilteredData(data);
+    } else {
+      const filtered = data.filter(employee =>
+        employee.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredData(filtered);
+    }
+  }, [searchQuery, data]);
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8000/employee/${id}`);
+      setData(data.filter(employee => employee.id !== id));
+      setFilteredData(filteredData.filter(employee => employee.id !== id));
+    } catch (error) {
+      console.error('Error deleting employee:', error);
+      setError('Failed to delete employee');
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -32,6 +57,13 @@ const EmployeeTable = () => {
         <h2 className="text-2xl text-gray-900 dark:text-white">
           Current Employee List
         </h2>
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="block w-full p-2 mt-4 mb-6 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none"
+        />
       </header>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -39,12 +71,12 @@ const EmployeeTable = () => {
             <th scope="col" className="px-6 py-3">ID</th>
             <th scope="col" className="px-6 py-3">Name</th>
             <th scope="col" className="px-6 py-3">
-              <span className="sr-only">View Details</span>
+              <span className="sr-only">Actions</span>
             </th>
           </tr>
         </thead>
         <tbody>
-          {data.map((employee, index) => (
+          {filteredData.map((employee, index) => (
             <tr
               key={employee.id}
               className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ${
@@ -55,13 +87,19 @@ const EmployeeTable = () => {
                 {employee.id}
               </td>
               <td className="px-6 py-4">{employee.name}</td>
-              <td className="px-6 py-4 text-right">
+              <td className="px-6 py-4 text-right flex space-x-2">
                 <Link
                   to={`/employee-details/${employee.id}`}
-                  className="font-medium text-purple-600 dark:text-purple-500 hover:underline"
+                  className="text-xs font-medium text-purple-600 dark:text-purple-500 hover:underline"
                 >
                   View Details
                 </Link>
+                <button
+                  onClick={() => handleDelete(employee.id)}
+                  className="text-xs font-medium text-red-600 dark:text-red-500 hover:underline"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

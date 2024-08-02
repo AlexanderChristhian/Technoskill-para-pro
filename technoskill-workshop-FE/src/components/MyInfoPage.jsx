@@ -8,7 +8,15 @@ export default function MyInfoPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [fadeIn, setFadeIn] = useState(false); 
+  const [fadeIn, setFadeIn] = useState(false);
+
+  // State for password update
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordUpdateError, setPasswordUpdateError] = useState("");
+  const [passwordUpdateSuccess, setPasswordUpdateSuccess] = useState("");
+  const [showPasswordEdit, setShowPasswordEdit] = useState(false); // State to toggle the section
+  const [passwordChangeInitiated, setPasswordChangeInitiated] = useState(false); // State to hide button
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -38,13 +46,42 @@ export default function MyInfoPage() {
     setPasswordVisible(!passwordVisible);
   };
 
+  const handlePasswordUpdate = async () => {
+    try {
+      const email = localStorage.getItem('ActiveEmail');
+      if (!email) {
+        setPasswordUpdateError("No active email found.");
+        return;
+      }
+
+      await axios.post("http://localhost:8000/manager/update-password", {
+        email,
+        currentPassword,
+        newPassword,
+      });
+
+      setPasswordUpdateSuccess("Password updated successfully.");
+      setCurrentPassword("");
+      setNewPassword("");
+      setShowPasswordEdit(false); // Hide the section after successful update
+    } catch (error) {
+      console.error("Failed to update password", error);
+      setPasswordUpdateError("Failed to update password.");
+    }
+  };
+
+  const handleChangePasswordClick = () => {
+    setPasswordChangeInitiated(true);
+    setShowPasswordEdit(true);
+  };
+
   return (
     <div className={`min-h-screen w-full bg-gradient-to-br from-slate-900 to-zinc-900 flex items-center justify-center transition-opacity duration-1000 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
-      <div className={`flex flex-col items-center justify-center w-full max-w-sm lg:max-w-2xl bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg overflow-hidden transition-transform duration-1000 ${fadeIn ? 'transform scale-100' : 'transform scale-95'}`}>
+      <div className={`flex flex-col items-center justify-center w-full max-w-sm lg:max-w-2xl bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg overflow-hidden transition-transform duration-1000 ${fadeIn ? 'transform scale-100' : 'transform scale-95'} mb-10`}>
         <div className="flex flex-col items-center w-full p-6 md:p-8 font-poppins text-gray-200">
           <div className="text-center font-medium text-xl text-purple-400 mb-4">
               User Profile
-            </div>
+          </div>
           <div className="flex flex-col items-center justify-center w-full lg:pt-0">
             <img src={employeeIcon} className="rounded-full shadow-xl h-32 w-32 md:h-48 md:w-48 bg-cover bg-center" alt="Profile Icon" />
           </div>
@@ -74,6 +111,54 @@ export default function MyInfoPage() {
           <p className="pt-4 md:pt-8 text-xs md:text-sm text-center">
             You are currently a registered user on this page, being a user will allow you to add a new employee details to the database of this website.
           </p>
+
+          {/* Toggle Edit Password Section */}
+          {!passwordChangeInitiated && (
+            <button
+              onClick={handleChangePasswordClick}
+              className="w-full bg-blue-600 text-white py-2 mt-4 rounded-lg hover:bg-blue-500 transition-colors duration-200"
+            >
+              Change Password
+            </button>
+          )}
+
+          {/* Edit Password Section */}
+          {showPasswordEdit && (
+            <div className="w-full mt-6 px-4 md:px-6">
+              <h2 className="text-lg font-semibold text-gray-200 mb-4">Change Password</h2>
+              {passwordUpdateError && <div className="text-red-500 mb-4">{passwordUpdateError}</div>}
+              {passwordUpdateSuccess && <div className="text-green-500 mb-4">{passwordUpdateSuccess}</div>}
+              <input
+                type="password"
+                placeholder="Current Password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                className="block w-full p-2 mb-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none"
+              />
+              <input
+                type="password"
+                placeholder="New Password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="block w-full p-2 mb-4 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none"
+              />
+              <button
+                onClick={handlePasswordUpdate}
+                className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-500 transition-colors duration-200"
+              >
+                Update Password
+              </button>
+              <button
+                onClick={() => {
+                  setShowPasswordEdit(false); // Hide section
+                  setPasswordChangeInitiated(false); // Show the main button again
+                }}
+                className="w-full bg-red-600 text-white py-2 mt-2 rounded-lg hover:bg-red-500 transition-colors duration-200"
+              >
+                Cancel
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

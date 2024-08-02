@@ -10,6 +10,36 @@ body {
   padding: 0;
 }
 
+nav.fill ul li a {
+  position: relative;
+  display: inline-block;
+  padding: 15px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.active-link {
+  color: #fff; 
+  background-color: #333; 
+  border-bottom: 2px solid #fff; 
+}
+
+nav.fill ul li a:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #aaa;
+  transition: width 0.3s ease;
+}
+
+nav.fill ul li a:hover:after {
+  width: 100%;
+  background: #fff; 
+}
+
 :root {
   --black-gradient: linear-gradient(
     144.39deg,
@@ -86,9 +116,14 @@ body {
   box-shadow: 0px 20px 100px -10px rgba(66, 71, 91, 0.1);
 }
 
+.confirm-dialog {
+  z-index: 3000; 
+}
+
 .sidebar {
   -webkit-animation: slide-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  z-index: 2000;
 }
 
 @-webkit-keyframes slide-top {

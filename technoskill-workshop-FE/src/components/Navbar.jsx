@@ -46,8 +46,10 @@ const Navbar = () => {
     setShowConfirmDialog(false);
   };
 
+  const isActive = (id) => location.pathname === `/${id}`;
+
   return (
-    <nav className="w-full flex py-6 justify-between items-center navbar">
+    <nav className="w-full flex py-6 justify-between items-center navbar fill">
       <img src={logo} alt="technoskill" className="w-[200px] h-[64px]" />
 
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
@@ -55,23 +57,27 @@ const Navbar = () => {
           <li
             key={nav.id}
             className={`font-poppins font-normal cursor-pointer text-[16px] ${
-              location.pathname === `/${nav.id}` || (location.state && location.state.active === nav.title) ? "text-white" : "text-dimWhite"
+              isActive(nav.id) ? "text-white" : "text-dimWhite"
             } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
-            onClick={() => handleNavigation(nav.title, nav.id)}
           >
-            {nav.title === "Register" || nav.id === "register" ? (
-              <span
-                className={`px-4 py-2 rounded-full ${
-                  location.pathname === `/${nav.id}` || (location.state && location.state.active === nav.title)
-                    ? "bg-purple-700 text-white"
-                    : "bg-purple-500 text-dimWhite"
-                }`}
-              >
-                {nav.title}
-              </span>
-            ) : (
-              nav.title
-            )}
+            <a
+              onClick={() => handleNavigation(nav.title, nav.id)}
+              className={`relative inline-block ${
+                isActive(nav.id) ? "font-bold" : ""
+              }`}
+            >
+              {nav.title === "Register" || nav.id === "register" ? (
+                <span
+                  className={`px-4 py-2 rounded-full ${
+                    isActive(nav.id) ? "bg-purple-700 text-white" : "bg-purple-500 text-dimWhite"
+                  }`}
+                >
+                  {nav.title}
+                </span>
+              ) : (
+                nav.title
+              )}
+            </a>
           </li>
         ))}
       </ul>
@@ -94,30 +100,34 @@ const Navbar = () => {
               <li
                 key={nav.id}
                 className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                  location.pathname === `/${nav.id}` || (location.state && location.state.active === nav.title) ? "text-white" : "text-dimWhite"
+                  isActive(nav.id) ? "text-white" : "text-dimWhite"
                 } ${index === navLinks.length - 1 ? "mb-0" : "mb-4"}`}
-                onClick={() => handleNavigation(nav.title, nav.id)}
               >
-                {nav.title === "Register" || nav.id === "register" ? (
-                  <span
-                    className={`px-4 py-2 rounded-full ${
-                      location.pathname === `/${nav.id}` || (location.state && location.state.active === nav.title)
-                        ? "bg-purple-700 text-white"
-                        : "bg-purple-500 text-dimWhite"
-                    }`}
-                  >
-                    {nav.title}
-                  </span>
-                ) : (
-                  nav.title
-                )}
+                <a
+                  onClick={() => handleNavigation(nav.title, nav.id)}
+                  className={`relative inline-block ${
+                    isActive(nav.id) ? "font-bold" : ""
+                  }`}
+                >
+                  {nav.title === "Register" || nav.id === "register" ? (
+                    <span
+                      className={`px-4 py-2 rounded-full ${
+                        isActive(nav.id) ? "bg-purple-700 text-white" : "bg-purple-500 text-dimWhite"
+                      }`}
+                    >
+                      {nav.title}
+                    </span>
+                  ) : (
+                    nav.title
+                  )}
+                </a>
               </li>
             ))}
           </ul>
         </div>
       </div>
       {showConfirmDialog && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50 confirm-dialog">
           <div className="font-poppins bg-gradient-to-r from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg text-center">
             <p className="text-white text-lg mb-4">Are you sure you want to sign out?</p>
             <div className="flex justify-center gap-4">

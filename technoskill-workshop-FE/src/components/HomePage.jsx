@@ -1,12 +1,23 @@
-import React, { useRef } from 'react';
-import { useEffect, useState } from "react";
+import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import EmployeeTable from './EmployeeTable';
 
 const HomePage = () => {
+  const [email, setEmail] = useState(null);
   const employeeTableRef = useRef(null);
+  const signInSectionRef = useRef(null); 
 
-  const scrollToEmployeeTable = () => {
-    employeeTableRef.current?.scrollIntoView({ behavior: 'smooth' });
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('ActiveEmail');
+    setEmail(storedEmail);
+  }, []);
+
+  const handleCheckBelowClick = () => {
+    if (email) {
+      employeeTableRef.current?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      signInSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -24,15 +35,34 @@ const HomePage = () => {
           </p>
         </div>
         <button 
-          onClick={scrollToEmployeeTable} 
+          onClick={handleCheckBelowClick} 
           className='bg-violet-500 hover:bg-violet-600 active:bg-violet-700 w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black'>
           Check Below
         </button>
       </div>
-      <div ref={employeeTableRef}>
-        <EmployeeTable />
-      </div>
-      
+
+      {email ? (
+        <div ref={employeeTableRef}>
+          <EmployeeTable />
+        </div>
+      ) : (
+        <div ref={signInSectionRef} className='text-center py-6'>
+          <p className='text-lg'>
+            <span className='text-white'>
+              <Link to="/login" className='text-purple-500 hover:underline'>
+                Sign In
+              </Link>
+              <span> now to gain access to full features!</span>
+            </span>
+          </p>
+        </div>
+      )}
+
+      <footer className = 'text-center py-4'>
+        <p className='text-gray-500 text-sm'>
+          Developed by Daffa Sayra Firdaus, Alexander Christian, and Adrian Dika Darmawan
+        </p>
+      </footer>
     </div>
   );
 };

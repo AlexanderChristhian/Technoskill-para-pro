@@ -23,7 +23,7 @@ export default function AddEmployeePage() {
       setError("Please fill in all fields");
       return;
     }
-
+  
     try {
       const response = await axios.post('http://localhost:8000/employee/add', {
         name,
@@ -31,17 +31,22 @@ export default function AddEmployeePage() {
         salary,
         address,
       });
-
+  
       if (response.status !== 201) throw new Error("Add employee failed");
-
+  
       console.log(response.data);
       navigate('/success');
-
+  
     } catch (error) {
       console.error(error);
-      setError("Failed to add employee");
+      if (error.response && error.response.status === 409) {
+        setError("An employee with this name already exists");
+      } else {
+        setError("Failed to add employee");
+      }
     }
   }
+  
 
   return (
     <div className={`flex items-center justify-center h-screen w-full px-5 sm:px-0 bg-gradient-to-br from-slate-900 to-zinc-900 transition-opacity duration-1000 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
