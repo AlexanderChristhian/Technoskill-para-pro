@@ -10,8 +10,10 @@
 ## Fitur - Fitur Utama :
 
 ### Home Page
-Home page merupakan menu utama yang berada pada web ini dan berisikan data - data yang akan dari employee yang telah diinput oleh user. Data - data yang telah diinput dapat dilihat oleh user dan dapat di search untuk mempermudah user untuk mencari data yang sesuai.
+Home page merupakan menu utama yang berada pada web ini dan berisikan data - data yang akan dari employee yang telah diinput oleh user. Data - data yang telah diinput dapat dilihat oleh user dan dapat di search untuk mempermudah user untuk mencari data yang sesuai. Kita juga dapat menghapus data yang sudah 
 
 ![image](https://github.com/user-attachments/assets/a0928fdd-6293-4d1a-817f-ea43c201dd31)
 
 ![image](https://github.com/user-attachments/assets/39ca5ae8-2706-46a2-9b7b-37d141b7fcc1)
+
+###
