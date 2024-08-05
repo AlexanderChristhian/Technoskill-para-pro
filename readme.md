@@ -1,31 +1,36 @@
-# Welcome to our WEBSITE for Technoskill 1.0
 ## This Project Is Made By:
 - Daffa Sayra Firdaus - Teknik Komputer 2023
 - Alexander Christhian - Teknik Komputer 2023
 - Adrian Dika Darmawan - Teknik Komputer 2023
 
 ## About Our Website
-Proyek kami merupakan sebuah website database management yang berguna untuk memudahkan proses pengerjaan HR dengan UI yang user friendly.
+Proyek kami merupakan sebuah website _database management_ yang berguna untuk memudahkan proses pengerjaan HR dengan UI yang _user-friendly_.
 
 # Fitur - Fitur Utama :
-### Login page
-Login page merupakan menu pertama yang berada pada web ini dan berguna untuk login sebuah user yang telah meregister ke web tersebut.
+### _Login page_
+_Login page_ adalah menu pertama pada web ini yang digunakan _user_ yang teregister untuk login ke web tersebut.
 
 ![Login Page](Screenshot/Login1.png)
 
 ![Login Page 2](Screenshot/Login2.png)
 
-### Register page
-Register page merupakan menu yang berguna untuk meregister suatu user baru yang ingin menggunakan website ini.
+### _Register page_
+_Register page_ adalah menu yang digunakan untuk meregister _user_ baru yang ingin menggunakan website ini.
 
 ![Register Page](Screenshot/Register1.png)
 
-### Home Page
-Home page merupakan menu utama yang berada pada web ini dan berisikan data - data yang akan dari employee yang telah diinput oleh user. Data - data yang telah diinput dapat dilihat oleh user dan dapat di search untuk mempermudah user untuk mencari data yang sesuai. Kita juga dapat menghapus data yang sudah 
+### _Home Page_
+_Home page_ adalah menu utama pada web ini yang berisikan data-data _employee_ yang telah diinput oleh _user_. Data-data yang telah diinput dapat dilihat dan di_search_ ataupun di_sort_ sehingga mempermudah _user_ untuk mencari data yang sesuai. Kita juga dapat menghapus data yang sudah ditambahkan ke database. 
 
 ![Home Page](Screenshot/354605133-a0928fdd-6293-4d1a-817f-ea43c201dd31.png)
 
 ![Home Page 2](Screenshot/Home2.jpg)
+
+![Searching](Screenshot/Searching.jpg)
+
+_Home page_ juga akan memberikan notifikasi kepada _user_ untuk melakukan _sign in_ jika _user_ tersebut ingin melihat/menginput data dalam web ini.
+
+![Home Page Notification](Screenshot/HomeNotif.jpg)
 
 ### Detail Employee Page
 Page ini merupakan page yang menampilkan detail dari data salah satu employee yang telah masuk ke database. Pada bagian ini user juga dapat mengedit data dari employee tersebut ataupun menghapus employee tersebut.
