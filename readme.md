@@ -48,3 +48,5 @@ My Info ini berfungsi untuk menampilkan informasi mengenai akun yang dipakai sek
 
 ### Sign Out
 Sign Out ini berfungsi untuk sign out dari akun yang sedang digunakan oleh user.
+
+![Sign Out Page](Screenshot/SignOut.png)
