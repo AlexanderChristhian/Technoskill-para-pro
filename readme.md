@@ -1,3 +1,4 @@
+# Welcome to our WEBSITE for Technoskill 1.0
 ## This Project Is Made By:
 - Daffa Sayra Firdaus - Teknik Komputer 2023
 - Alexander Christhian - Teknik Komputer 2023
@@ -78,3 +79,30 @@ Penerapan _error handling_ ini muncul ketika pengguna menginput password yang be
 Penerapan _error handling_ ini muncul ketika pengguna menginput data yang salah ketika ingin login.
 
 ![Failed to Login Error Handling](Screenshot/ErrorHandlingLogin.jpg)
+
+# _Responsive_
+UI web kami adaptif terhadap ukuran layar handphone sehingga web kami terjaga dalam konsistensi kerapihan _layout_ web kami dalam perangkat lain. Berikut tampilan-tampilannya:
+
+![MobileLogin](Screenshot/MobileLogin.jpg)
+
+![MobileLoginSuccess](Screenshot/MobileLoginSuccess.jpg)
+
+![MobileRegister](Screenshot/MobileRegister.jpg)
+
+![MobileHome](Screenshot/MobileHome.jpg)
+
+![MobileListID](Screenshot/MobileListID.jpg)
+
+![MobileListName](Screenshot/MobileListName.jpg)
+
+![MobileDetail](Screenshot/MobileDetail.jpg)
+
+![MobileDetail2](Screenshot/MobileDetail2.jpg)
+
+![MobileAddEmployee](Screenshot/MobileAddEmployee.jpg)
+
+![MobileMyInfo](Screenshot/MobileMyInfo.jpg)
+
+![MobileMyInfoChange](Screenshot/MobileMyInfoChange.jpg)
+
+![MobileSignOut](Screenshot/MobileSignOut.jpg)
