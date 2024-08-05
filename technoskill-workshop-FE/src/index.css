@@ -10,6 +10,39 @@ body {
   padding: 0;
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px); 
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+
+.fade-in-animation {
+  animation: fadeIn 2s ease-in-out infinite;
+}
+
 nav.fill ul li a {
   position: relative;
   display: inline-block;

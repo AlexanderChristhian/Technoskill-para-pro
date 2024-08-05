@@ -133,18 +133,27 @@ const EmployeeDetails = () => {
               <>
                 <h1 className="text-2xl font-bold pt-4 text-center">{employee.name}</h1>
                 <div className="mx-auto lg:mx-0 w-full pt-3 border-b-2 border-purple-600 opacity-25"></div>
-                <p className="pt-2 font-bold text-gray-200 text-base lg:text-sm flex items-center justify-center">
-                  <i className="fas fa-building h-4 text-purple-600 pr-4"></i>
-                  Division: <span className="pl-2 font-normal">{employee.division}</span>
-                </p>
-                <p className="pt-2 font-bold text-gray-200 text-base lg:text-sm flex items-center justify-center">
-                  <i className="fas fa-dollar-sign h-4 text-purple-600 pr-4"></i>
-                  Salary: <span className="pl-2 font-normal">Rp {employee.salary}</span>
-                </p>
-                <p className="pt-2 font-bold text-gray-200 text-base lg:text-sm flex items-center justify-center">
-                  <i className="fas fa-map-marker-alt h-4 text-purple-600 pr-4"></i>
-                  Address: <span className="pl-2 font-normal">{employee.address}</span>
-                </p>
+                <div className="pt-2 text-gray-200 text-base lg:text-sm flex flex-col items-center">
+                  <p className="font-bold flex items-center mb-2">
+                    <i className="fas fa-building h-4 text-purple-600 pr-2"></i>
+                    Division:
+                  </p>
+                  <p className="pl-2 font-normal">{employee.division}</p>
+                </div>
+                <div className="pt-2 text-gray-200 text-base lg:text-sm flex flex-col items-center">
+                  <p className="font-bold flex items-center mb-2">
+                    <i className="fas fa-dollar-sign h-4 text-purple-600 pr-2"></i>
+                    Salary:
+                  </p>
+                  <p className="pl-2 font-normal">Rp {employee.salary}</p>
+                </div>
+                <div className="pt-2 text-gray-200 text-base lg:text-sm flex flex-col items-center">
+                  <p className="font-bold flex items-center mb-2">
+                    <i className="fas fa-map-marker-alt h-4 text-purple-600 pr-2"></i>
+                    Address:
+                  </p>
+                  <p className="pl-2 font-normal">{employee.address}</p>
+                </div>
                 <button
                   onClick={handleEditToggle}
                   className="w-full bg-purple-600 text-white py-2 mt-4 rounded-lg hover:bg-purple-500 transition-colors duration-200"

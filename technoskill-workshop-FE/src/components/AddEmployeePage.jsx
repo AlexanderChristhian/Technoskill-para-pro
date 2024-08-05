@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import ngumpulImage from '../assets/ngumpul.png'; 
-import './transisi.css'; // Import the CSS file
+import './transisi.css'; 
 
 export default function AddEmployeePage() {
   const [name, setName] = useState("");

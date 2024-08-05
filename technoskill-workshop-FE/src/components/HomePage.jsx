@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import EmployeeTable from './EmployeeTable';
+import mobile from '../assets/mobile.png';
 
 const HomePage = () => {
   const [email, setEmail] = useState(null);
@@ -22,15 +23,26 @@ const HomePage = () => {
 
   return (
     <div className='text-white font-poppins'>
-      <div className='max-w-[800px] mt-[-96px] w-full h-screen mx-auto text-center flex flex-col justify-center'>
-        <p className='bg-gradient-to-br from-purple-400 to-pink-500 bg-clip-text text-transparent font-bold p-2'>
+      <div className='max-w-[800px] mt-[-96px] w-full h-screen mx-auto text-center flex items-center flex-col justify-center'>
+        <p className='bg-gradient-to-br from-purple-400 to-pink-500 bg-clip-text text-transparent font-bold p-2 text-base md:text-lg'>
           Welcome to Technoskill 1.0 Employee Database Management
         </p>
-        <h1 className='md:text-5xl animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-white pr-5 text-white sm:text-5xl text-4xl font-bold md:py-6'>
-          Manage your Workforce Now!!!
-        </h1>
+        <div className='flex flex-col items-center'>
+          <div className='hidden md:block'>
+            <h1 className='text-2xl sm:text-3xl md:text-5xl md:animate-typing text-center md:overflow-hidden md:whitespace-nowrap md:border-r-4 border-r-white md:pr-5 font-bold md:py-6'>
+              Manage your Workforce Now!!!
+            </h1>
+          </div>
+          <div className='md:hidden mt-4 mb-4'> 
+            <img 
+              src={mobile} 
+              alt="Mobile Icon" 
+              className="w-20 h-20 float-animation"
+            />
+          </div>
+        </div>
         <div className='flex justify-center items-center'>
-          <p className='md:text-2xl sm:text-4xl text-xl font-bold py-4'>
+          <p className='text-lg sm:text-xl md:text-2xl font-bold py-4'>
             A <span className='bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent'>robust</span> and <span className='bg-gradient-to-r from-orange-400 to-pink-400 bg-clip-text text-transparent'>user-friendly</span> employee database management system designed to streamline your HR processes
           </p>
         </div>
@@ -58,7 +70,7 @@ const HomePage = () => {
         </div>
       )}
 
-      <footer className = 'text-center py-4'>
+      <footer className='text-center py-4'>
         <p className='text-gray-500 text-sm'>
           Developed by Daffa Sayra Firdaus, Alexander Christian, and Adrian Dika Darmawan
         </p>

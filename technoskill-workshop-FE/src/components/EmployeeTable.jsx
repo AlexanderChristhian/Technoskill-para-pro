@@ -8,12 +8,12 @@ const EmployeeTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'asc' });
 
   const fetchEmployees = async () => {
     try {
       const response = await axios.post("http://localhost:8000/employee/get");
       setData(response.data);
-      setFilteredData(response.data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching employees:', error);
@@ -25,6 +25,28 @@ const EmployeeTable = () => {
   useEffect(() => {
     fetchEmployees();
   }, []);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      setSortConfig({ key: 'id', direction: 'asc' });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    let sortedData = [...data];
+    if (sortConfig !== null) {
+      sortedData.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    setFilteredData(sortedData);
+  }, [sortConfig, data]);
 
   useEffect(() => {
     if (searchQuery === '') {
@@ -48,6 +70,14 @@ const EmployeeTable = () => {
     }
   };
 
+  const requestSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
@@ -68,8 +98,20 @@ const EmployeeTable = () => {
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" className="px-6 py-3">ID</th>
-            <th scope="col" className="px-6 py-3">Name</th>
+            <th
+              scope="col"
+              className="px-6 py-3 cursor-pointer"
+              onClick={() => requestSort('id')}
+            >
+              ID {sortConfig.key === 'id' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 cursor-pointer"
+              onClick={() => requestSort('name')}
+            >
+              Name {sortConfig.key === 'name' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+            </th>
             <th scope="col" className="px-6 py-3">
               <span className="sr-only">Actions</span>
             </th>
@@ -84,7 +126,7 @@ const EmployeeTable = () => {
               }`}
             >
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {employee.id}
+                E{employee.id}
               </td>
               <td className="px-6 py-4">{employee.name}</td>
               <td className="px-6 py-4 text-right flex space-x-2">
