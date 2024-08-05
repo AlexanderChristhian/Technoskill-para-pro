@@ -42,7 +42,7 @@ Add Employee ini berfungsi untuk menambahkan employee baru ke dalam database. Us
 ### My Info Page
 My Info ini berfungsi untuk menampilkan informasi mengenai akun yang dipakai sekarang oleh user tersebut. Pada My Info ini user juga dapat mengganti password dari akun yang sedang dipakai.
 
-![My Info Page](Screenshot/MyInfo1.png)
+![My Info Page](Screenshot/MyInfo1.jpg)
 
 ![My Info Page 2](Screenshot/MyInfo2.png)
 
