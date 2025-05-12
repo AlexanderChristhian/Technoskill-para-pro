@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
 import ngumpulImage from '../assets/ngumpul.png'; 
 import './transisi.css'; 
+import authService from "../services/authService";
 
 export default function AddEmployeePage() {
   const [name, setName] = useState("");
@@ -16,7 +16,12 @@ export default function AddEmployeePage() {
 
   useEffect(() => {
     setFadeIn(true);
-  }, []);
+    
+    // Check authentication
+    if (!authService.isAuthenticated()) {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   const handleAddEmployee = async () => {
     if (!name || !division || !salary || !address) {
@@ -25,7 +30,8 @@ export default function AddEmployeePage() {
     }
   
     try {
-      const response = await axios.post('http://localhost:8000/employee/add', {
+      const authAxios = authService.getAuthAxios();
+      const response = await authAxios.post('http://localhost:8000/employee/add', {
         name,
         division,
         salary,
@@ -36,9 +42,16 @@ export default function AddEmployeePage() {
   
       console.log(response.data);
       navigate('/success');
-  
     } catch (error) {
       console.error(error);
+      
+      // If unauthorized, redirect to login
+      if (error.response && error.response.status === 401) {
+        authService.removeToken();
+        navigate('/login');
+        return;
+      }
+      
       if (error.response && error.response.status === 409) {
         setError("An employee with this name already exists");
       } else {
@@ -47,7 +60,6 @@ export default function AddEmployeePage() {
     }
   }
   
-
   return (
     <div className={`flex items-center justify-center h-screen w-full px-5 sm:px-0 bg-gradient-to-br from-slate-900 to-zinc-900 transition-opacity duration-1000 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
       <div className={`flex bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg overflow-hidden max-w-sm lg:max-w-4xl w-full transition-transform duration-1000 ${fadeIn ? 'transform scale-100' : 'transform scale-95'}`}>

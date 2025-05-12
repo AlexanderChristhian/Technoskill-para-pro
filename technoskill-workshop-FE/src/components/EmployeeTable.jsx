@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import authService from '../services/authService';
 
 const EmployeeTable = () => {
   const [data, setData] = useState([]);
@@ -9,6 +10,8 @@ const EmployeeTable = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'asc' });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
   const fetchEmployees = async () => {
     try {
@@ -24,6 +27,7 @@ const EmployeeTable = () => {
 
   useEffect(() => {
     fetchEmployees();
+    setIsAuthenticated(authService.isAuthenticated());
   }, []);
 
   useEffect(() => {
@@ -60,12 +64,26 @@ const EmployeeTable = () => {
   }, [searchQuery, data]);
 
   const handleDelete = async (id) => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    
     try {
-      await axios.delete(`http://localhost:8000/employee/${id}`);
+      const authAxios = authService.getAuthAxios();
+      await authAxios.delete(`http://localhost:8000/employee/${id}`);
       setData(data.filter(employee => employee.id !== id));
       setFilteredData(filteredData.filter(employee => employee.id !== id));
     } catch (error) {
       console.error('Error deleting employee:', error);
+      
+      // If unauthorized, redirect to login
+      if (error.response && error.response.status === 401) {
+        authService.removeToken();
+        navigate('/login');
+        return;
+      }
+      
       setError('Failed to delete employee');
     }
   };
@@ -136,12 +154,14 @@ const EmployeeTable = () => {
                 >
                   View Details
                 </Link>
-                <button
-                  onClick={() => handleDelete(employee.id)}
-                  className="text-xs font-medium text-red-600 dark:text-red-500 hover:underline"
-                >
-                  Delete
-                </button>
+                {isAuthenticated && (
+                  <button
+                    onClick={() => handleDelete(employee.id)}
+                    className="text-xs font-medium text-red-600 dark:text-red-500 hover:underline"
+                  >
+                    Delete
+                  </button>
+                )}
               </td>
             </tr>
           ))}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import './transisi.css';
+import authService from "../services/authService";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -12,7 +12,12 @@ const LoginPage = () => {
 
   useEffect(() => {
     setFadeIn(true);
-  }, []);
+    
+    // Check if user is already authenticated
+    if (authService.isAuthenticated()) {
+      navigate('/home');
+    }
+  }, [navigate]);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -21,18 +26,8 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8000/manager/login", {
-        email,
-        password
-      });
-      if (response.status !== 200) throw new Error("Login failed");
-      if (email && password) {
-        localStorage.setItem('ActiveEmail', email);
-      } else {
-        setError("Failed to login. Please check your credentials.");
-        return;
-      }
-      setTimeout(() => navigate('/login-success'), 0);
+      await authService.login(email, password);
+      navigate('/login-success');
     } catch (error) {
       console.error(error);
       setError("Failed to login. Please check your credentials.");

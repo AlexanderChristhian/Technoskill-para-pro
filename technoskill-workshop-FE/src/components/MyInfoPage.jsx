@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import employeeIcon from "../assets/employee.svg";
 import './transisi.css'; 
+import authService from "../services/authService";
 
 export default function MyInfoPage() {
   const [profile, setProfile] = useState({ username: "", email: "", password: "" });
@@ -9,6 +10,7 @@ export default function MyInfoPage() {
   const [error, setError] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
+  const navigate = useNavigate();
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -19,27 +21,32 @@ export default function MyInfoPage() {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const email = localStorage.getItem('ActiveEmail');
-      if (email) {
-        try {
-          const response = await axios.get(`http://localhost:8000/manager/profile?email=${email}`);
-          setProfile(response.data);
-        } catch (error) {
-          console.error("Failed to fetch profile", error);
-          setError("Failed to fetch profile information.");
-        } finally {
-          setLoading(false);
+      if (!authService.isAuthenticated()) {
+        navigate('/login');
+        return;
+      }
+      
+      try {
+        const authAxios = authService.getAuthAxios();
+        const response = await authAxios.get('http://localhost:8000/manager/profile');
+        setProfile(response.data);
+      } catch (error) {
+        console.error("Failed to fetch profile", error);
+        setError("Failed to fetch profile information.");
+        
+        // If unauthorized, redirect to login
+        if (error.response && error.response.status === 401) {
+          authService.removeToken();
+          navigate('/login');
         }
-      } else {
-        console.error("No active email found");
-        setError("No active email found.");
+      } finally {
         setLoading(false);
       }
     };
 
     fetchProfile();
     setFadeIn(true);
-  }, []);
+  }, [navigate]);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -47,14 +54,8 @@ export default function MyInfoPage() {
 
   const handlePasswordUpdate = async () => {
     try {
-      const email = localStorage.getItem('ActiveEmail');
-      if (!email) {
-        setPasswordUpdateError("No active email found.");
-        return;
-      }
-
-      await axios.post("http://localhost:8000/manager/update-password", {
-        email,
+      const authAxios = authService.getAuthAxios();
+      await authAxios.post("http://localhost:8000/manager/update-password", {
         currentPassword,
         newPassword,
       });
@@ -62,10 +63,14 @@ export default function MyInfoPage() {
       setPasswordUpdateSuccess("Password updated successfully.");
       setCurrentPassword("");
       setNewPassword("");
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error("Failed to update password", error);
-      setPasswordUpdateError("Failed to update password.");
+      setPasswordUpdateError(
+        error.response?.data?.error || "Failed to update password."
+      );
     }
   };
 

@@ -11,6 +11,7 @@ import EmployeeTable from "./components/EmployeeTable";
 import SuccessPage from "./components/SuccessPage";
 import RegisterSuccess from "./components/RegisterSuccess";
 import LoginSuccess from "./components/LoginSuccess";
+import RedisTestPage from "./components/RedisTestPage";
 
 const App = () => (
   <div className="bg-gradient-to-br from-slate-900 to-zinc-900 overflow-hidden">
@@ -41,6 +42,8 @@ const App = () => (
         <Route path="/register-success" element={<RegisterSuccess />} />
 
         <Route path="/login-success" element={<LoginSuccess />} />
+
+        <Route path="/redis-test" element={<RedisTestPage />} />
       </Routes>
     </BrowserRouter>
       </div>
@@ -48,7 +51,5 @@ const App = () => (
   </div>
 
 );
-
-
 
 export default App;

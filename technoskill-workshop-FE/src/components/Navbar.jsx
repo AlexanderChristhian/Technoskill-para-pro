@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { close, logo, menu } from "../assets";
 import { useState, useEffect } from "react";
+import authService from "../services/authService";
 
 const Navbar = () => {
   const location = useLocation();
@@ -8,24 +9,30 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [navLinks, setNavLinks] = useState([]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
   useEffect(() => {
-    const email = localStorage.getItem('ActiveEmail');
+    const checkAuth = () => {
+      const auth = authService.isAuthenticated();
+      setIsAuthenticated(auth);
+      
+      if (auth) {
+        setNavLinks([
+          { id: "home", title: "Home" },
+          { id: "add-employee", title: "Add Employee" },
+          { id: "my-info", title: "My Info" },
+          { id: "sign-out", title: "Sign Out" },
+        ]);
+      } else {
+        setNavLinks([
+          { id: "home", title: "Home" },
+          { id: "login", title: "Login" },
+          { id: "register", title: "Register" },
+        ]);
+      }
+    };
     
-    if (email) {
-      setNavLinks([
-        { id: "home", title: "Home" },
-        { id: "add-employee", title: "Add Employee" },
-        { id: "my-info", title: "My Info" },
-        { id: "sign-out", title: "Sign Out" },
-      ]);
-    } else {
-      setNavLinks([
-        { id: "home", title: "Home" },
-        { id: "login", title: "Login" },
-        { id: "register", title: "Register" },
-      ]);
-    }
+    checkAuth();
   }, [location]);
 
   const handleNavigation = (title, id) => {
@@ -36,10 +43,14 @@ const Navbar = () => {
     }
   };
 
-  const handleSignOut = () => {
-    localStorage.removeItem('ActiveEmail');
-    setShowConfirmDialog(false);
-    navigate('/login');
+  const handleSignOut = async () => {
+    try {
+      await authService.logout();
+      setShowConfirmDialog(false);
+      navigate('/login');
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   const handleCancel = () => {

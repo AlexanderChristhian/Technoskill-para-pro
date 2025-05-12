@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
 import registrasi from '../assets/registrasi.png'; 
-import './transisi.css'; 
+import './transisi.css';
+import authService from "../services/authService";
 
 const RegisterPage = () => {
     const [email, setEmail] = useState("");
@@ -16,7 +16,12 @@ const RegisterPage = () => {
 
     useEffect(() => {
         setFadeIn(true);
-    }, []);
+        
+        // Check if user is already authenticated
+        if (authService.isAuthenticated()) {
+            navigate('/home');
+        }
+    }, [navigate]);
 
     const handleRegister = async () => {
         if (!email || !username || !password || !confirmPassword) {
@@ -30,19 +35,9 @@ const RegisterPage = () => {
         }
     
         try {
-            const response = await axios.post('http://localhost:8000/manager/register', {
-                email,
-                username,
-                password,
-            });
-    
-            if (response.status !== 201) throw new Error("Register failed");
-    
-            console.log(response.data);
+            await authService.register(email, username, password);
             navigate('/register-success');
-    
         } catch (error) {
-            
             if (error.response && error.response.data && error.response.data.error) {
                 setError(error.response.data.error);
             } else {

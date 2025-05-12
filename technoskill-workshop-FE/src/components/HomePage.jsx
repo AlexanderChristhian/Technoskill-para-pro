@@ -2,19 +2,19 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import EmployeeTable from './EmployeeTable';
 import mobile from '../assets/mobile.png';
+import authService from '../services/authService';
 
 const HomePage = () => {
-  const [email, setEmail] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const employeeTableRef = useRef(null);
   const signInSectionRef = useRef(null); 
 
   useEffect(() => {
-    const storedEmail = localStorage.getItem('ActiveEmail');
-    setEmail(storedEmail);
+    setIsAuthenticated(authService.isAuthenticated());
   }, []);
 
   const handleCheckBelowClick = () => {
-    if (email) {
+    if (isAuthenticated) {
       employeeTableRef.current?.scrollIntoView({ behavior: 'smooth' });
     } else {
       signInSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -53,7 +53,7 @@ const HomePage = () => {
         </button>
       </div>
 
-      {email ? (
+      {isAuthenticated ? (
         <div ref={employeeTableRef}>
           <EmployeeTable />
         </div>
